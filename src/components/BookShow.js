@@ -1,20 +1,25 @@
-import { useState } from 'react'
-import BookEdit from './BookEdit'
+import { useState } from 'react';
+import BookEdit from './BookEdit';
 
-function BookShow({book, onDelete}) {
-  const [showEdit, setShowEdit] = useState(false)
+function BookShow({ book, onDelete, onEdit }) {
+  const [showEdit, setShowEdit] = useState(false);
 
   const handleEditClick = () => {
-    setShowEdit(!showEdit)
-  }
+    setShowEdit(!showEdit);
+  };
 
   const handleDeleteClick = () => {
-    onDelete(book.id)
-  }
-  
-  let content = <h3>{book.title}</h3>
+    onDelete(book.id);
+  };
+
+  const handleSubmit = (id, newTitle) => {
+    setShowEdit(false);
+    onEdit(id, newTitle)
+  };
+
+  let content = <h3>{book.title}</h3>;
   if (showEdit) {
-    content = <BookEdit book={book}/>
+    content = <BookEdit onSubmit={handleSubmit} book={book} onEdit={onEdit} />;
   }
 
   return (
@@ -29,7 +34,7 @@ function BookShow({book, onDelete}) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default BookShow
+export default BookShow;
